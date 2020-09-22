@@ -1,12 +1,13 @@
 import React from 'react';
+import { BrowserQRCodeReader } from '@zxing/library';
+
 import './App.css';
 import CameraChooser from './CameraChooser';
 import QrScanner from './QrScanner';
-
-import * as ZXing from '@zxing/library'
-import { BrowserQRCodeReader } from '@zxing/library';
+import Result from './Result';
 
 const STATE_ERROR = -1;
+const STATE_WAITING_FOR_CAMERAS = -2;
 const STATE_CHOOSING_CAMERA = 0;
 const STATE_SCANNING = 1;
 const STATE_SHOWING_RESULT = 2;
@@ -16,13 +17,15 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      state: STATE_CHOOSING_CAMERA,
+      state: STATE_WAITING_FOR_CAMERAS,
       error: null,
       devices: [],
       selectedDevice: null
     }
-    this.qrReader = new ZXing.BrowserQRCodeReader()
+    this.qrReader = new BrowserQRCodeReader()
     this.onDeviceChosen = this.onDeviceChosen.bind(this)
+    this.showResults = this.showResults.bind(this)
+    this.showScanningScreen = this.showScanningScreen.bind(this)
   }
 
   componentDidMount() {
@@ -36,8 +39,10 @@ class App extends React.Component {
         })
       })
       .then((devices) => {
+        const newState = devices.length == 1 ? STATE_SCANNING : STATE_CHOOSING_CAMERA
         console.log("getting devices")
         this.setState({
+          state: newState,
           devices, 
           error: null
         })
@@ -51,24 +56,34 @@ class App extends React.Component {
     })
   }
   
+  showScanningScreen() {
+    this.onDeviceChosen(this.state.selectedDevice)
+  }
+
+  showResults(decoded) {
+    console.log(decoded)
+    this.setState({
+      state: STATE_SHOWING_RESULT
+    })
+  }
+
   render() {
     const state = this.state
     switch(state.state) {
-      case STATE_CHOOSING_CAMERA:
-        switch(state.devices.length) {
-          case 0: 
-            return <span>Waiting for camera devices...</span>
-          case 1: return <QrScanner 
-            
-          />
-          default: 
-            return <CameraChooser 
-              devices={state.devices}
-              onDeviceChosen={this.onDeviceChosen }
-            />
-        }
-      default:
-        return <QrScanner />
+      case STATE_WAITING_FOR_CAMERAS:
+        return <span className="waitingForCameras">Waiting for camera devices...</span>
+        case STATE_CHOOSING_CAMERA:
+          return <CameraChooser 
+          devices={state.devices}
+          onDeviceChosen={this.onDeviceChosen }
+        />
+      case STATE_SCANNING:
+        return <QrScanner
+          deviceId={state.selectedDevice}
+          onQrScanned={this.showResults}
+        />
+      case STATE_SHOWING_RESULT:
+        return <Result back={this.showScanningScreen}/>
     }
   }
 }

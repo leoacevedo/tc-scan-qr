@@ -41,7 +41,7 @@ class CameraChooser extends React.Component {
     }
 
     render() {
-      const { devices, onDeviceSelected } = this.props
+      const { devices, onDeviceChosen } = this.props
       return <div className="cameraChooser">
         <h1>Elija la c&aacute;mara que va a usar</h1>
         <select ref={this.selectRef} onChange={this.updateSelectedDevice }>
@@ -59,7 +59,7 @@ class CameraChooser extends React.Component {
           height="300">
         </video>
   
-        <button onClick={() => this.onDeviceSelected(onDeviceSelected)}>Seleccionar</button>
+        <button onClick={() => this.onDeviceSelected(onDeviceChosen)}>Seleccionar</button>
       </div>
     }
   }

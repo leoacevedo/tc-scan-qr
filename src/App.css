@@ -1,14 +1,74 @@
 .App {
+  color: white;
   text-align: center;
   align-items: center;
   align-content: center;
   display: flex;
+  background-color: #343a40;
   flex-direction: column;
+  padding-top: 50px;
+  padding-bottom: 50px
 }
 
 .cameraChooser {
   display:flex;
   flex-direction: column;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 50px;
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+}
+
+.row-title {
+  font-weight: 700 !important;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: #007bff;
+}
+
+.row-odd {
+  font-weight: 700 !important;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.row-even {
+  font-weight: 700 !important;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: #6c757d !important
+}
+
+.row-total {
+  font-weight: 700 !important;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #007bff;
+}
+
+td {
+  line-height: 3rem;
+}
+
+.waitingForCameras {
+  font-size: 26px;
 }
 
 .cameraChooser * {
@@ -23,8 +83,12 @@ video {
   border-width: 2px;
 }
 
-select {
+select, button {
   font-size: 20px;
+}
+
+.bottomButton {
+  margin-bottom: 50px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -32,16 +96,3 @@ select {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
