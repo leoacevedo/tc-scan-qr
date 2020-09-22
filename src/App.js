@@ -1,47 +1,75 @@
 import React from 'react';
-import logo from './qrcode-1.jpg';
 import './App.css';
+import CameraChooser from './CameraChooser';
+import QrScanner from './QrScanner';
 
 import * as ZXing from '@zxing/library'
 import { BrowserQRCodeReader } from '@zxing/library';
+
+const STATE_ERROR = -1;
+const STATE_CHOOSING_CAMERA = 0;
+const STATE_SCANNING = 1;
+const STATE_SHOWING_RESULT = 2;
 
 class App extends React.Component {
   
   constructor() {
     super()
-    this.scanQR = this.scanQR.bind(this)
-    this.imgRef = React.createRef()
+    this.state = {
+      state: STATE_CHOOSING_CAMERA,
+      error: null,
+      devices: [],
+      selectedDevice: null
+    }
+    this.qrReader = new ZXing.BrowserQRCodeReader()
+    this.onDeviceChosen = this.onDeviceChosen.bind(this)
   }
 
-  scanQR() {
-    const img = this.imgRef.current
-    const qrReader = new BrowserQRCodeReader()
-    qrReader.decodeFromImage(img)
-      .then((result) => console.log(result))
-      .catch((e) => console.error(e))
+  componentDidMount() {
+    this.qrReader.listVideoInputDevices()
+      .catch((e) => {
+        console.error(e)
+        this.setState({
+          state: STATE_ERROR,
+          error: e, 
+          devices: []
+        })
+      })
+      .then((devices) => {
+        console.log("getting devices")
+        this.setState({
+          devices, 
+          error: null
+        })
+      })
   }
 
+  onDeviceChosen(device) {
+    this.setState({
+      state: STATE_SCANNING,
+      selectedDevice: device
+    })
+  }
+  
   render() {
-    console.log(ZXing)
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" ref={this.imgRef}/>
-          <button  onClick={this.scanQR}>Scan</button>
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    const state = this.state
+    switch(state.state) {
+      case STATE_CHOOSING_CAMERA:
+        switch(state.devices.length) {
+          case 0: 
+            return <span>Waiting for camera devices...</span>
+          case 1: return <QrScanner 
+            
+          />
+          default: 
+            return <CameraChooser 
+              devices={state.devices}
+              onDeviceChosen={this.onDeviceChosen }
+            />
+        }
+      default:
+        return <QrScanner />
+    }
   }
 }
 
