@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "906451a6322a9ccb076703879c835527",
+    "revision": "8337dc6650248b93411f6e9a16a9c88c",
     "url": "/tc-scan-qr/index.html"
   },
   {
