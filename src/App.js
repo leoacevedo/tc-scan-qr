@@ -17,6 +17,7 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      // state: STATE_SHOWING_RESULT,
       state: STATE_WAITING_FOR_CAMERAS,
       error: null,
       devices: [],
@@ -28,8 +29,10 @@ class App extends React.Component {
     this.showScanningScreen = this.showScanningScreen.bind(this)
   }
 
-  componentDidMount() {
-    this.qrReader.listVideoInputDevices()
+  componentDidMount () {
+    navigator.mediaDevices.getUserMedia({
+      video: true
+    })
       .catch((e) => {
         console.error(e)
         this.setState({
@@ -38,12 +41,15 @@ class App extends React.Component {
           devices: []
         })
       })
-      .then((devices) => {
-        const newState = devices.length == 1 ? STATE_SCANNING : STATE_CHOOSING_CAMERA
-        console.log("getting devices")
+      .then(stream => {
+        return stream.getVideoTracks() 
+      })
+      .then(tracks => {
+        const newState = tracks.length == 1 ? STATE_SCANNING : STATE_CHOOSING_CAMERA
+        console.log(tracks)
         this.setState({
           state: newState,
-          devices, 
+          devices: tracks, 
           error: null
         })
       })

@@ -20,11 +20,10 @@ class QrScanner extends React.Component {
 
     render(props) {
         return <div className="qrScanner">
-            <h1>Escanee el c&oacute;digo QR</h1>
+            <h1>Escanee el c&oacute;digo</h1>
             <video
                 ref={this.videoRef}
-                width="400"
-                height="300" />
+            />
         </div>
     }
 }  

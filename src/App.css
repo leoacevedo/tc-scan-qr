@@ -1,13 +1,17 @@
+body {
+  background-color: #343a40;
+}
 .App {
   color: white;
   text-align: center;
   align-items: center;
   align-content: center;
   display: flex;
-  background-color: #343a40;
   flex-direction: column;
-  padding-top: 50px;
-  padding-bottom: 50px
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .cameraChooser {
@@ -16,7 +20,7 @@
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 table {
@@ -32,7 +36,6 @@ table {
 .row-title {
   font-weight: 700 !important;
   box-sizing: border-box;
-  font-size: 1.2rem;
   text-align: center;
   background-color: #007bff;
 }
@@ -41,7 +44,6 @@ table {
   font-weight: 700 !important;
   box-sizing: border-box;
   border-collapse: collapse;
-  font-size: 1.2rem;
   text-align: center;
 }
 
@@ -49,7 +51,6 @@ table {
   font-weight: 700 !important;
   box-sizing: border-box;
   border-collapse: collapse;
-  font-size: 1.2rem;
   text-align: center;
   background-color: #6c757d !important
 }
@@ -58,13 +59,28 @@ table {
   font-weight: 700 !important;
   box-sizing: border-box;
   border-collapse: collapse;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   text-align: center;
   background-color: #007bff;
 }
 
 td {
-  line-height: 3rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.td-description {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+}
+
+td {
+  line-height: 1.15rem;
 }
 
 .waitingForCameras {
@@ -77,6 +93,7 @@ td {
 }
 
 video {
+  width: 100%;
   align-self: center;
   border-color: #ccc;
   border-style: solid;
