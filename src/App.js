@@ -45,12 +45,15 @@ class App extends React.Component {
         return stream.getVideoTracks() 
       })
       .then(tracks => {
-        const newState = tracks.length == 1 ? STATE_SCANNING : STATE_CHOOSING_CAMERA
+        const singleTrack = tracks.length == 1
+        const newState = singleTrack ? STATE_SCANNING : STATE_CHOOSING_CAMERA
+        const newDeviceId = singleTrack ? tracks[0] : this.state.deviceId
         console.log(tracks)
         this.setState({
           state: newState,
           devices: tracks, 
-          error: null
+          deviceId: newDeviceId,
+          error: null,
         })
       })
   }
