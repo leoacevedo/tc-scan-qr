@@ -17,8 +17,8 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      // state: STATE_SHOWING_RESULT,
-      state: STATE_WAITING_FOR_CAMERAS,
+      state: STATE_SHOWING_RESULT,
+      // state: STATE_WAITING_FOR_CAMERAS,
       error: null,
       devices: [],
       selectedDevice: null
@@ -29,7 +29,7 @@ class App extends React.Component {
     this.showScanningScreen = this.showScanningScreen.bind(this)
   }
 
-  componentDidMount () {
+  _componentDidMount () {
     navigator.mediaDevices.getUserMedia({
       video: true
     })
